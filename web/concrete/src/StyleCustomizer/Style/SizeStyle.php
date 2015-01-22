@@ -45,11 +45,11 @@ class SizeStyle extends Style {
         return $sv;
     }
 
-    public function getValuesFromVariables($rules = array()) {
+    public function getValuesFromVariables($rules = array()), $ruleset = NULL {
         $values = array();
         foreach($rules as $rule) {
             if (preg_match('/@(.+)\-size/i', $rule->name, $matches)) {
-                $value = $rule->value->value[0]->value[0];
+                $value = static::getRuleValue($rule);
                 $sv = static::parse($value, $matches[1]);
                 if (is_object($sv)) {
                     $values[] = $sv;

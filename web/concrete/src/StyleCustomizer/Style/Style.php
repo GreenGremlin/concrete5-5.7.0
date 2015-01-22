@@ -9,7 +9,7 @@ abstract class Style
     protected $name;
 
     abstract public function render($value = false);
-    abstract public function getValuesFromVariables($rules = array());
+    abstract public function getValuesFromVariables($rules = array(), $ruleset = NULL);
     abstract public function getValueFromRequest(\Symfony\Component\HttpFoundation\ParameterBag $request);
 
     public function getValueFromList(\Concrete\Core\StyleCustomizer\Style\ValueList $list)
@@ -20,6 +20,16 @@ abstract class Style
                 return $value;
             }
         }
+    }
+
+    protected static function getRuleValue($rule, $ruleset = NULL)
+    {
+        $value = $rule->value->value[0]->value[0];
+
+        if ($value->type == "Variable" && $ruleset != NULL) {
+            $value = $ruleset->variable($value->name)->value->value[0]->value[0];
+        }
+        return $value;
     }
 
     protected static function getTypeFromClass($class, $suffix = 'Style')

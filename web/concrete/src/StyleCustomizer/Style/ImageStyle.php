@@ -52,13 +52,18 @@ class ImageStyle extends Style
         }
     }
 
-    public function getValuesFromVariables($rules = array())
+    public function getValuesFromVariables($rules = array(), $ruleset = NULL)
     {
         $values = array();
         foreach ($rules as $rule) {
             if (preg_match('/@(.+)\-image/i', $rule->name, $matches)) {
-                $entryURI = $rule->value->value[0]->value[0]->currentFileInfo['entryUri'];
-                $value = $rule->value->value[0]->value[0]->value;
+                $ruleDef = $rule->value->value[0]->value[0];
+                if ($ruleDef->type == "Variable" && $ruleset != NULL) {
+                    $ruleDef = $ruleset->variable($ruleDef->name)->value->value[0]->value[0];
+                }
+
+                $entryURI = $ruleDef->currentFileInfo['entryUri'];
+                $value = $ruleDef->value;
                 if ($entryURI) {
                     $value = Less_Environment::normalizePath($entryURI . $value);
                 }

@@ -124,52 +124,52 @@ class TypeStyle extends Style {
         return $tv;
     }
 
-    public function getValuesFromVariables($rules = array())
+    public function getValuesFromVariables($rules = array(), $ruleset = NULL)
     {
         $values = array();
 
         foreach($rules as $rule) {
+            $value = static::getRuleValue($rule);
             if (preg_match('/@(.+)\-type-font-family/i', $rule->name, $matches)) {
+                $value = $value->value;
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0]->value;
                 $values[$matches[1]]->setFontFamily($value);
             }
             if (preg_match('/@(.+)\-type-font-weight/i', $rule->name, $matches)) {
+                $value = $value->value;
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0]->value;
                 $values[$matches[1]]->setFontWeight($value);
             }
             if (preg_match('/@(.+)\-type-text-decoration/i', $rule->name, $matches)) {
+                $value = $value->value;
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0]->value;
                 $values[$matches[1]]->setTextDecoration($value);
             }
 
             if (preg_match('/@(.+)\-type-text-transform/i', $rule->name, $matches)) {
+                $value = $value->value;
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0]->value;
                 $values[$matches[1]]->setTextTransform($value);
             }
             if (preg_match('/@(.+)\-type-font-style/i', $rule->name, $matches)) {
+                $value = $value->value;
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0]->value;
                 $values[$matches[1]]->setFontStyle($value);
             }
             if (preg_match('/@(.+)\-type-color/i', $rule->name, $matches)) {
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0];
                 $cv = ColorStyle::parse($value);
                 if ($cv instanceof ColorValue) {
                     $values[$matches[1]]->setColor($cv);
@@ -180,7 +180,6 @@ class TypeStyle extends Style {
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0];
                 $sv = SizeStyle::parse($value);
                 if ($sv instanceof SizeValue) {
                     $values[$matches[1]]->setFontSize($sv);
@@ -191,7 +190,6 @@ class TypeStyle extends Style {
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0];
                 $sv = SizeStyle::parse($value);
                 if ($sv instanceof SizeValue) {
                     $values[$matches[1]]->setLetterSpacing($sv);
@@ -202,7 +200,6 @@ class TypeStyle extends Style {
                 if (!$values[$matches[1]]) {
                     $values[$matches[1]] = new TypeValue($matches[1]);
                 }
-                $value = $rule->value->value[0]->value[0];
                 $sv = SizeStyle::parse($value);
                 if ($sv instanceof SizeValue) {
                     $values[$matches[1]]->setLineHeight($sv);

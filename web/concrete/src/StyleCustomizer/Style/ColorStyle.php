@@ -89,11 +89,11 @@ class ColorStyle extends Style {
         return $cv;
     }
 
-    public function getValuesFromVariables($rules = array()) {
+    public function getValuesFromVariables($rules = array(), $ruleset = NULL) {
         $values = array();
         foreach($rules as $rule) {
             if (preg_match('/@(.+)\-color/i', $rule->name, $matches)) {
-                $value = $rule->value->value[0]->value[0];
+                $value = static::getRuleValue($rule);
                 $cv = static::parse($value, $matches[1]);
                 if (is_object($cv)) {
                     $values[] = $cv;

@@ -57,7 +57,7 @@ class ValueList {
 
         foreach(array('ColorStyle', 'TypeStyle', 'ImageStyle', 'SizeStyle') as $type) {
             $o = '\\Concrete\\Core\\StyleCustomizer\\Style\\' . $type;
-            $values = call_user_func_array(array($o, 'getValuesFromVariables'), array($rules));
+            $values = call_user_func_array(array($o, 'getValuesFromVariables'), array($rules, $parser));
             $vl->addValues($values);
         }
 
